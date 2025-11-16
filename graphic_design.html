@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Graphic Design - Inkspire</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Small page-specific tweaks (keeps your main style.css unchanged) */
+    .gd-hero { background:#f5f7fa; padding:40px 20px; text-align:center; }
+    .gd-hero h2 { margin-bottom:10px; color:#2c3e50; }
+    .gd-hero p { color:#555; max-width:800px; margin:0 auto 20px; }
+
+    .gd-services { display:flex; flex-wrap:wrap; gap:18px; justify-content:center; margin:30px 0; }
+    .gd-card { width:280px; background:white; border-radius:10px; padding:18px; box-shadow:0 6px 18px rgba(0,0,0,0.08); }
+    .gd-card h3 { margin:0 0 10px; font-size:1.05rem; color:#2c3e50; }
+    .gd-card p { color:#666; font-size:0.95rem; }
+
+    /* Gallery */
+    .gd-gallery { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin:25px 0; }
+    .gd-gallery img { width:220px; height:140px; object-fit:cover; border-radius:8px; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,0.08); transition:transform .18s ease; }
+    .gd-gallery img:hover { transform:translateY(-6px); }
+
+    /* Lightbox */
+    .lightbox { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.7); z-index:2000; padding:20px; }
+    .lightbox img{ max-width:95%; max-height:85%; border-radius:6px; box-shadow:0 18px 40px rgba(0,0,0,0.5); }
+    .lightbox .close { position:absolute; top:20px; right:20px; color:white; font-size:28px; cursor:pointer; background:transparent; border:none; }
+
+    /* CTA */
+    .gd-cta { text-align:center; margin:30px 0 50px; }
+    .gd-cta .btn { padding:12px 24px; font-size:1rem; border-radius:8px; }
+
+    @media(max-width:600px){
+      .gd-gallery img { width:46vw; height:30vw; }
+      .gd-card { width:100%; max-width:420px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>Inkspire</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="gd-hero">
+  <div class="container">
+    <h2>Graphic Design Services</h2>
+    <p>Logos, social media sets, posters, banners, and brand identity — crafted to help your Fiverr gigs look professional and sell better.</p>
+  </div>
+</section>
+
+<section class="services-preview">
+  <div class="container">
+    <div class="gd-services">
+      <div class="gd-card">
+        <h3>Logo Design</h3>
+        <p>Clean, memorable logos that reflect your brand voice. Includes 2 revisions and SVG + PNG deliverables.</p>
+      </div>
+      <div class="gd-card">
+        <h3>Social Media Packs</h3>
+        <p>Ready-to-post images sized for Instagram, Facebook, and Twitter. Includes 3 templates and custom caption idea.</p>
+      </div>
+      <div class="gd-card">
+        <h3>Print & Promo</h3>
+        <p>Flyers, posters, and banners formatted for print or online use — high-res files ready to share.</p>
+      </div>
+    </div>
+
+    <h2 style="margin-top:12px;">Design Samples</h2>
+    <div class="gd-gallery">
+      <!-- Update these filenames to match your images in /images/ -->
+      <img src="images/placeholder3.png" alt="Design sample 1" data-full="images/placeholder3.png">
+      <img src="images/banner.png" alt="Design sample 2" data-full="images/banner.png">
+      <img src="images/sample1.png" alt="Design sample 3" data-full="images/sample1.png">
+      <img src="images/placeholder.png" alt="Design sample 4" data-full="images/placeholder.png">
+    </div>
+
+    <div class="gd-cta">
+      <a href="contact.html" class="btn">Order a Custom Design</a>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="close" id="lb-close" aria-label="Close">✕</button>
+  <img id="lb-img" src="" alt="Expanded design">
+</div>
+
+<footer>
+  <div class="container">
+    <p>© 2025 Inkspire. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // Simple lightbox logic
+  const gallery = document.querySelectorAll('.gd-gallery img');
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbClose = document.getElementById('lb-close');
+
+  gallery.forEach(img => {
+    img.addEventListener('click', () => {
+      const full = img.getAttribute('data-full') || img.src;
+      lbImg.src = full;
+      lightbox.style.display = 'flex';
+      lightbox.setAttribute('aria-hidden','false');
+    });
+  });
+
+  lbClose.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+    lightbox.setAttribute('aria-hidden','true');
+    lbImg.src = '';
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.style.display = 'none';
+      lightbox.setAttribute('aria-hidden','true');
+      lbImg.src = '';
+    }
+  });
+
+  // close on Esc
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      lightbox.style.display = 'none';
+      lightbox.setAttribute('aria-hidden','true');
+      lbImg.src = '';
+    }
+  });
+</script>
+
+</body>
+</html>
